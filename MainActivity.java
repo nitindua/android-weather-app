@@ -47,8 +47,7 @@ import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.widget.WebDialog;
 import com.facebook.widget.WebDialog.OnCompleteListener;
-//import com.example.weather.LoginUsingCustomFragmentActivity;
-//import com.example.weather.LoginUsingActivityActivity.SessionStatusCallback;
+
 
 public class MainActivity extends Activity implements OnMenuItemClickListener, OnClickListener {
 
@@ -65,18 +64,18 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 	TableLayout weatherTable;
 	
 	private PopupMenu popupMenu;
-		//TextView city = (TextView) findViewById(R.id.);
+	
 	
 	private static final String URL_PREFIX_FRIENDS = "https://graph.facebook.com/me/friends?access_token=";
 	private Session.StatusCallback statusCallback = new SessionStatusCallback();
 	
 	private final static int ONE = 1;
-    private final static int TWO = 2;
-    private String popupChoice;
-    private Session session;
+    	private final static int TWO = 2;
+        private String popupChoice;
+        private Session session;
     
-    String cityJSON = null;
-    String regionJSON = null;
+        String cityJSON = null;
+        String regionJSON = null;
 	String countryJSON = null;
 	String feed = null;
 	String img = null;
@@ -131,26 +130,26 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 		
 		
 		popupMenu = new PopupMenu(getApplicationContext(), findViewById(R.id.facebookIcon));
-        popupMenu.getMenu().add(Menu.NONE, ONE, Menu.NONE, "Post Current Weather");
-        popupMenu.getMenu().add(Menu.NONE, TWO, Menu.NONE, "Post Weather Forecast");
-        popupMenu.setOnMenuItemClickListener(this);
-        findViewById(R.id.facebookIcon).setOnClickListener(this);
+                popupMenu.getMenu().add(Menu.NONE, ONE, Menu.NONE, "Post Current Weather");
+        	popupMenu.getMenu().add(Menu.NONE, TWO, Menu.NONE, "Post Weather Forecast");
+	        popupMenu.setOnMenuItemClickListener(this);
+	        findViewById(R.id.facebookIcon).setOnClickListener(this);
 		
 		
 		Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
 		session = Session.getActiveSession();
-        if (session == null) {
-        	if (savedInstanceState != null) {
-            	//session = Session.restoreSession(this, null, statusCallback, savedInstanceState);
-            }
-            if (session == null) {
-            	session = new Session(this);
-            }
-            Session.setActiveSession(session);
-            if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
-            	//session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-            }
-        }
+        	if (session == null) {
+        		if (savedInstanceState != null) {
+        	    	
+            		}
+            		if (session == null) {
+            			session = new Session(this);
+            		}
+            		Session.setActiveSession(session);
+		        if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
+		            	//session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+		        }
+        	}
         
         
         
@@ -161,7 +160,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 		postForecast = (Button) findViewById(R.id.postForecast);
 	}
 	
-	@Override
+    @Override
     public void onStart() {
         super.onStart();
         Session.getActiveSession().addCallback(statusCallback);
@@ -194,32 +193,19 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 
     private void updateView() {
         Session session = Session.getActiveSession();
-        /*if (session.isOpened()) {
-            
-            //buttonLoginLogout.setText(R.string.logout);
-            facebookIcon.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { onClickLogout(); }
+       	facebookIcon.setOnClickListener(new OnClickListener() {
+       		public void onClick(View view) { onClickLogin(); }
             });
-        } else {*/
-            
-            //buttonLoginLogout.setText(R.string.login);
-        	facebookIcon.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { onClickLogin(); }
-            });
-        //}
     }
 
     private void onClickLogin() {
-    	Log.d("Session(`gin)", session.getState().toString());
-        Session session = Session.getActiveSession();
+    	Session session = Session.getActiveSession();
         if (!session.isOpened() && !session.isClosed()) {
-        	Log.d("Session(1)", "1");
             session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
         } else {
             Session.openActiveSession(this, true, statusCallback);
-            Log.d("Session(2)", "2");
         }
-        Log.d("Session(after login)", session.getState().toString());
+        
     }
 
     private void onClickLogout() {
@@ -233,10 +219,9 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
         @Override
         public void call(Session session, SessionState state, Exception exception) {
         	Log.d("Session(inside callback)", session.getState().toString());
-            //updateView();
+            
         	if(session.isOpened())
         	{
-        		//publishCurrentWeather();
         		Log.d("Session(inside callback!!!)", session.getState().toString());
         		Log.d("User choice", String.valueOf(userChoice));
         		publishCurrentWeather();
@@ -258,9 +243,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 	        case R.id.action_googlemaps:
 	        	google2();
 	            return true;
-	        /*case R.id.action_compose:
-	            composeMessage();
-	            return true; */
+	        
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -272,7 +255,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
         if (!session.isOpened() && !session.isClosed()) {
         	onClickLogin();
         }
-		//onClickLogin();
+		
         else
         	publishCurrentWeather();
 	}
@@ -283,26 +266,18 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
         if (!session.isOpened() && !session.isClosed()) {
         	onClickLogin();
         }
-		//onClickLogin();
+		
         else
         	publishCurrentWeather();
-		//onClickLogin();
-		//publishCurrentWeather();
+	
 	}
 	
-	public void google(View view){
-		Log.d("google2", "google2");
-		String uri = String.format(Locale.ENGLISH, "geo:0,0?q=%s", ((EditText) findViewById(R.id.location)).getText().toString() );
-		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-		//intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-		startActivity(intent);
-	}
-	
+
 	public void google2(){
 		Log.d("google2", "google2");
 		String uri = String.format(Locale.ENGLISH, "geo:0,0?q=%s", ((EditText) findViewById(R.id.location)).getText().toString() );
 		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-		//intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+
 		startActivity(intent);
 	}
 	
@@ -317,12 +292,12 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 		String locationValue = location.getText().toString();
  
 		String type = validateInput(locationValue);
-		//Toast.makeText(getApplicationContext(), type, Toast.LENGTH_LONG).show();
+
 		if(!type.equalsIgnoreCase("false")){
 			locationValue = locationValue.replaceAll("\\s+","+");
 			try{
 				String urlString = "http://cs-server.usc.edu:12471/WeatherForecast/WeatherForecastServlet?locationValue=" + URLEncoder.encode(locationValue, "UTF-8") + "&locationType=" + type +"&tempUnits=" + units;
-				//Toast.makeText(getApplicationContext(), urlString, Toast.LENGTH_LONG).show();
+
 				new GetResponse().execute(urlString);
 		    }catch(Exception e){
 				e.printStackTrace();
@@ -471,10 +446,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 					tableRow1.setVisibility(View.VISIBLE);
 					postCurrent.setVisibility(View.VISIBLE);
 					postForecast.setVisibility(View.VISIBLE);
-					//facebookIcon.setVisibility(View.VISIBLE);
-					//googlemapsIcon.setVisibility(View.VISIBLE);
-					//googlemapsIcon2.setVisibility(View.VISIBLE);
-					
+
 				}
 				catch(Exception e)
 				{
@@ -513,7 +485,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		popupMenu.show();
 		Log.d("OnClick", "HERE");
 		
@@ -524,11 +495,9 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 		if(item.getItemId() == ONE){
 			onClickLogin();
 			userChoice = 1;
-			//publishCurrentWeather();
 		}
 		else{
 			onClickLogin();
-			//publishWeatherForecast();
 			userChoice = 2;
 		}
 		return true;
@@ -596,8 +565,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 	    	
 	            public void onComplete(Bundle values, FacebookException error) {
 	                if (error == null) {
-	                    // When the story is posted, echo the success
-	                    // and the post Id.
 	                    final String postId = values.getString("post_id");
 	                    if (postId != null) {
 	                        Toast.makeText(getApplicationContext(), "Posted story, id: "+postId, Toast.LENGTH_SHORT).show();
@@ -620,8 +587,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 	        })
 	        .build();
 	    feedDialog.show();
-	}
-	    Log.d("3", "3");
+            }
 	}
 	
 	public void publishWeatherForecast(){
