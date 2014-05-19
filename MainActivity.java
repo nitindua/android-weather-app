@@ -505,7 +505,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
 	
 	public void publishCurrentWeather(){
 		
-		Log.d("1", "1");
 		String degree = null;
 		if(tempUnits.equalsIgnoreCase("F"))
 			degree = "\u2109";
@@ -590,71 +589,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener, O
             }
 	}
 	
-	public void publishWeatherForecast(){
-		
-		try{
-			String degree = null;
-			if(tempUnits.equalsIgnoreCase("F"))
-				degree = "\u2109";
-			else
-				degree = "\u2103";
-		Bundle params = new Bundle();
-		params.putString("name", cityJSON + ", " + regionJSON + ", " + countryJSON);
-	    params.putString("caption", "Weather Forecast for " + cityJSON);
-	    params.putString("description", forecast0.getString("day") + ": " + forecast0.getString("text") + ", " + forecast0.getString("high") + "/" + forecast0.getString("low") + degree + tempUnits + "; "
-	    							+	forecast1.getString("day") + ": " + forecast1.getString("text") + ", " + forecast1.getString("high") + "/" + forecast1.getString("low") + degree + tempUnits + "; "
-	    							+	forecast2.getString("day") + ": " + forecast2.getString("text") + ", " + forecast2.getString("high") + "/" + forecast2.getString("low") + degree + tempUnits + "; "
-	    							+ 	forecast3.getString("day") + ": " + forecast3.getString("text") + ", " + forecast3.getString("high") + "/" + forecast3.getString("low") + degree + tempUnits + "; "
-	    							+ 	forecast4.getString("day") + ": " + forecast4.getString("text") + ", " + forecast4.getString("high") + "/" + forecast4.getString("low") + degree + tempUnits + ". " );
-	    		
-	    		
-	    		
-	    params.putString("link", feed);
-	    params.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
-	    JSONObject property = new JSONObject(); 
-    
-	    property.put("text", "here"); 
-	    property.put("href", link); 
-	    JSONObject properties = new JSONObject(); 
-	    properties.put("Look at details", property); 
-	    params.putString("properties", properties.toString());
-    
-	    
-	    
-	    
-	    WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(getApplicationContext(), Session.getActiveSession(), params)).setOnCompleteListener(new OnCompleteListener() {
-
-	            public void onComplete(Bundle values, FacebookException error) {
-	                if (error == null) {
-	                    // When the story is posted, echo the success
-	                    // and the post Id.
-	                    final String postId = values.getString("post_id");
-	                    if (postId != null) {
-	                        Toast.makeText(getApplicationContext(), "Posted story, id: "+postId, Toast.LENGTH_SHORT).show();
-	                    } 
-	                    else {
-	                        // User clicked the Cancel button
-	                        Toast.makeText(getApplicationContext(), "Publish cancelled", Toast.LENGTH_SHORT).show();
-	                    }
-	                } 
-	                else if (error instanceof FacebookOperationCanceledException) {
-	                    // User clicked the "x" button
-	                    Toast.makeText(getApplicationContext(), "Publish cancelled", Toast.LENGTH_SHORT).show();
-	                } 
-	                else {
-	                    // Generic, ex: network error
-	                    Toast.makeText(getApplicationContext(), "Error posting story", Toast.LENGTH_SHORT).show();
-	                }
-	            }
-
-	        })
-	        .build();
-	    feedDialog.show();
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	
 }
 
 	
